@@ -26,7 +26,7 @@ export default function ArticleBody({ post }: ArticleBodyProps) {
   });
 
   return (
-    <article className="mx-auto max-w-3xl">
+    <article className="mx-auto max-w-3xl px-4 sm:px-0">
       <header className="mb-8">
         <h1 className="mb-4 text-2xl font-bold text-gray-900 sm:text-3xl leading-tight">
           {title}
@@ -80,7 +80,7 @@ export default function ArticleBody({ post }: ArticleBodyProps) {
       )}
 
       <div
-        className="prose prose-gray max-w-none prose-img:rounded-lg prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline"
+        className="prose prose-gray max-w-none prose-img:rounded-lg prose-img:w-full prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline break-words [word-break:keep-all]"
         dangerouslySetInnerHTML={{ __html: post.content.rendered }}
       />
     </article>
