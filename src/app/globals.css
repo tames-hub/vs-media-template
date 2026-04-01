@@ -17,6 +17,18 @@ body {
 .prose img {
   max-width: 100%;
   height: auto;
+  width: 100%;
+  object-fit: contain;
+}
+
+/* 인물 사진 등 세로가 긴 이미지 제한 */
+.prose img[src*="wp-content"] {
+  max-height: 500px;
+  width: auto;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }
 
 .prose iframe {
@@ -25,6 +37,16 @@ body {
 
 .prose figure {
   margin: 1.5em 0;
+  overflow: hidden;
+}
+
+.prose figure img {
+  max-height: 500px;
+  width: auto;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }
 
 .prose figcaption {
@@ -32,6 +54,19 @@ body {
   font-size: 0.875em;
   color: #6b7280;
   margin-top: 0.5em;
+}
+
+/* WP 본문 내 테이블 반응형 */
+.prose table {
+  display: block;
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+/* WP 본문 내 넘치는 요소 방지 */
+.prose * {
+  max-width: 100%;
+  overflow-wrap: break-word;
 }
 
 /* Line clamp */
