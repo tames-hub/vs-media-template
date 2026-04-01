@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { WPPost } from '@/lib/types';
 import { getFeaturedImageUrl, getAuthorName } from '@/lib/wordpress';
 import { siteConfig } from '@/lib/config';
+import { transformTitle, transformExcerpt } from '@/lib/rewrite';
 
 interface ArticleBodyProps {
   post: WPPost;
@@ -10,6 +11,9 @@ interface ArticleBodyProps {
 export default function ArticleBody({ post }: ArticleBodyProps) {
   const imageUrl = getFeaturedImageUrl(post);
   const author = getAuthorName(post);
+  const rawTitle = post.title.rendered.replace(/<[^>]*>/g, '');
+  const title = transformTitle(rawTitle);
+  const perspectiveIntro = transformExcerpt(rawTitle, '').trim();
   const date = new Date(post.date).toLocaleDateString('ko-KR', {
     year: 'numeric',
     month: 'long',
@@ -24,10 +28,9 @@ export default function ArticleBody({ post }: ArticleBodyProps) {
   return (
     <article className="mx-auto max-w-3xl">
       <header className="mb-8">
-        <h1
-          className="mb-4 text-2xl font-bold text-gray-900 sm:text-3xl leading-tight"
-          dangerouslySetInnerHTML={{ __html: post.title.rendered }}
-        />
+        <h1 className="mb-4 text-2xl font-bold text-gray-900 sm:text-3xl leading-tight">
+          {title}
+        </h1>
         <div className="flex items-center gap-3 text-sm text-gray-500">
           <span>{author}</span>
           <span>·</span>
@@ -67,6 +70,12 @@ export default function ArticleBody({ post }: ArticleBodyProps) {
             sizes="(max-width: 768px) 100vw, 768px"
             priority
           />
+        </div>
+      )}
+
+      {perspectiveIntro && (
+        <div className="mb-6 rounded-lg border-l-4 bg-gray-50 p-4 text-sm text-gray-700 leading-relaxed" style={{ borderColor: siteConfig.themeColor }}>
+          {perspectiveIntro}
         </div>
       )}
 

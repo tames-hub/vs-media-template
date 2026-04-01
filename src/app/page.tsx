@@ -5,6 +5,7 @@ import ArticleCard from '@/components/ArticleCard';
 import Pagination from '@/components/Pagination';
 import Image from 'next/image';
 import Link from 'next/link';
+import { transformTitle } from '@/lib/rewrite';
 
 export const revalidate = 600;
 
@@ -51,10 +52,9 @@ export default async function HomePage({ searchParams }: HomePageProps) {
             )}
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 p-6">
-              <h1
-                className="text-xl font-bold text-white sm:text-3xl leading-tight line-clamp-2"
-                dangerouslySetInnerHTML={{ __html: heroPost.title.rendered }}
-              />
+              <h1 className="text-xl font-bold text-white sm:text-3xl leading-tight line-clamp-2">
+                {transformTitle(heroPost.title.rendered.replace(/<[^>]*>/g, ''))}
+              </h1>
               <p className="mt-2 text-sm text-gray-200">
                 {new Date(heroPost.date).toLocaleDateString('ko-KR', {
                   year: 'numeric',

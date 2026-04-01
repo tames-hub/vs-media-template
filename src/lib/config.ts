@@ -9,6 +9,9 @@ export const siteConfig = {
   gaId: process.env.GA_ID || '',
   revalidateSecret: process.env.REVALIDATE_SECRET || '',
   revalidate: 600, // 10 minutes
+  // 매체별 톤 가이드 (AI 리라이트 / 제목 변형용)
+  tonePrefix: process.env.SITE_TONE_PREFIX || '',
+  tonePerspective: process.env.SITE_TONE_PERSPECTIVE || '',
 } as const;
 
 export const crossMediaLinks = [

@@ -13,6 +13,7 @@ import ArticleBody from '@/components/ArticleBody';
 import JsonLd from '@/components/JsonLd';
 import RelatedArticles from '@/components/RelatedArticles';
 import CrossMediaLinks from '@/components/CrossMediaLinks';
+import { transformTitle, transformMetaDescription } from '@/lib/rewrite';
 
 export const revalidate = 600;
 export const dynamicParams = true;
@@ -30,8 +31,9 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
   const post = await getPostBySlug(params.slug);
   if (!post) return { title: '기사를 찾을 수 없습니다' };
 
-  const title = post.title.rendered.replace(/<[^>]*>/g, '');
-  const description = stripHtml(post.excerpt.rendered).slice(0, 160);
+  const rawTitle = post.title.rendered.replace(/<[^>]*>/g, '');
+  const title = transformTitle(rawTitle);
+  const description = transformMetaDescription(rawTitle, stripHtml(post.excerpt.rendered).slice(0, 160));
   const imageUrl = getFeaturedImageUrl(post);
   const author = getAuthorName(post);
 
