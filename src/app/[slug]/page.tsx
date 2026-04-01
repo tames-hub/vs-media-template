@@ -15,6 +15,7 @@ import RelatedArticles from '@/components/RelatedArticles';
 import CrossMediaLinks from '@/components/CrossMediaLinks';
 
 export const revalidate = 600;
+export const dynamicParams = true;
 
 interface ArticlePageProps {
   params: { slug: string };
