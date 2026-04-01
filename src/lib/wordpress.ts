@@ -92,8 +92,15 @@ export async function getPosts(page: number = 1, perPage: number = 12): Promise<
 }
 
 export async function getPostBySlug(slug: string): Promise<WPPost | null> {
+  // Handle double-encoded Korean slugs from Next.js routing
+  let decodedSlug = slug;
+  try {
+    decodedSlug = decodeURIComponent(slug);
+  } catch {
+    // already decoded
+  }
   const posts = await fetchAPI<WPPost[]>(
-    `/posts?slug=${encodeURIComponent(slug)}&_embed`
+    `/posts?slug=${encodeURIComponent(decodedSlug)}&_embed`
   );
   return posts?.[0] || null;
 }
@@ -149,7 +156,9 @@ export async function getAllPostSlugs(): Promise<string[]> {
       if (!res.ok) break;
       const posts: Array<{ slug: string }> = await res.json();
       const totalPages = parseInt(res.headers.get('X-WP-TotalPages') || '0', 10);
-      slugs.push(...posts.map((p) => p.slug));
+      slugs.push(...posts.map((p) => {
+      try { return decodeURIComponent(p.slug); } catch { return p.slug; }
+    }));
       if (page >= totalPages) break;
     } catch {
       break;
