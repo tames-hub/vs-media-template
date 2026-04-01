@@ -80,7 +80,7 @@ export default function ArticleBody({ post }: ArticleBodyProps) {
       )}
 
       <div
-        className="prose prose-gray max-w-none prose-img:rounded-lg prose-img:w-full prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline break-words [word-break:keep-all]"
+        className="prose prose-gray max-w-none overflow-hidden prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline break-words [word-break:keep-all]"
         dangerouslySetInnerHTML={{ __html: post.content.rendered }}
       />
     </article>
